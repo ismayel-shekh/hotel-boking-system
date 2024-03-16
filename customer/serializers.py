@@ -11,8 +11,8 @@ class customerSrializer(serializers.ModelSerializer):
 
 class RegistrationSrializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
-    image = models.ImageField(upload_to='customer/image/')
-    mobile_no = models.CharField(max_length=20, blank=True, null=True)
+    image = serializers.ImageField()
+    mobile_no = serializers.CharField()
 
     class Meta:
         model = User

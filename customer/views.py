@@ -21,7 +21,7 @@ class customerViewset(viewsets.ModelViewSet):
     
 
 class UserRegistrationApiView(APIView):
-    serializer_class = serializers.RegistrationSerializer
+    serializer_class = serializers.RegistrationSrializer
     
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
