@@ -11,12 +11,11 @@ class customerSrializer(serializers.ModelSerializer):
 
 class RegistrationSrializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
-    image = serializers.ImageField()
     mobile_no = serializers.CharField()
 
     class Meta:
         model = User
-        fields = ['username', 'first_name','last_name', 'email','mobile_no', 'image', 'password', 'confirm_password',]
+        fields = ['username', 'first_name','last_name', 'email','mobile_no','password', 'confirm_password',]
 
     def save(self):
         username = self.validated_data['username']
@@ -25,7 +24,6 @@ class RegistrationSrializer(serializers.ModelSerializer):
         email = self.validated_data['email']
         password = self.validated_data['password']
         password2 = self.validated_data['confirm_password']
-        image = self.validated_data.get('image')
         mobile_no = self.validated_data.get('mobile_no')
 
 
@@ -41,7 +39,6 @@ class RegistrationSrializer(serializers.ModelSerializer):
         account.save()
         customer.objects.create(
             user = account,
-            image = image,
             mobile_no = mobile_no,
             balance = 0,
         )
