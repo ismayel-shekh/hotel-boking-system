@@ -8,6 +8,11 @@ class customerSrializer(serializers.ModelSerializer):
     class Meta:
         model = models.customer
         fields = '__all__'
+class USERSrializer(serializers.ModelSerializer):
+    # user = serializers.StringRelatedField(many=False)
+    class Meta:
+        model = models.User
+        fields = '__all__'
 
 class RegistrationSrializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)

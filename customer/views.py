@@ -18,6 +18,10 @@ from rest_framework.authtoken.models import Token
 class customerViewset(viewsets.ModelViewSet):
     queryset = models.customer.objects.all()
     serializer_class = serializers.customerSrializer
+
+class USERViewset(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.USERSrializer
     
 
 class UserRegistrationApiView(APIView):
@@ -29,11 +33,13 @@ class UserRegistrationApiView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             print(user)
+            print(user)
             token = default_token_generator.make_token(user)
             print("token ", token)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             print("uid ", uid)
             confirm_link = f"https://hotel-boking-system.onrender.com/user/active/{uid}/{token}"
+            
             email_subject = "Confirm Your Email"
             email_body = render_to_string('confirm_email.html', {'confirm_link' : confirm_link})
             
@@ -47,13 +53,15 @@ def activate(request, uid64, token):
     try:
         uid = urlsafe_base64_decode(uid64).decode()
         user = User._default_manager.get(pk=uid)
+        print(user.id)
+        print(user.pk)
     except(User.DoesNotExist):
         user = None 
     
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('login')
+        return redirect('http://127.0.0.1:5501/login.html')
     else:
         return redirect('register')
     
@@ -71,13 +79,22 @@ class UserLoginApiView(APIView):
                 print(token)
                 print(_)
                 login(request, user)
+                print(user.id)
+
                 return Response({'token' : token.key, 'user_id' : user.id})
             else:
                 return Response({'error' : "Invalid Credential"})
         return Response(serializer.errors) 
-
+    
 class UserLogoutView(APIView):
     def get(self, request):
         request.user.auth_token.delete()
-        logout(request)
+        # logout(request)
         return redirect('login')
+
+# from rest_framework.generics import GenericAPIView 
+# class UserLogoutView(GenericAPIView):
+#     def get(self, request, format=None):
+#         if request.is_authenticated():
+#             request.user.auth_token.delete()
+#         return redirect('login')

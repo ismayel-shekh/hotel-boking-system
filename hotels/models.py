@@ -8,17 +8,17 @@ class category(models.Model):
         return self.name
     
 class Hotel(models.Model):
-    category = models.ForeignKey(category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(category)
     hotel_name = models.CharField(max_length=200)
     location = models.CharField(max_length=255)
     details = models.TextField()
     card_image = models.ImageField(upload_to='hotels/image/')
     image_1 = models.ImageField(upload_to='hotels/image/')
     image_2 = models.ImageField(upload_to='hotels/image/')
-    avilable_room = models.DecimalField(max_digits=12, decimal_places=2)
-    price = models.IntegerField()
+    avilable_room = models.IntegerField(default=0)
+    room_price = models.IntegerField()
     def __str__(self):
-        return self.category.name
+        return self.hotel_name
 
 
 STAR_CHOICES=[
@@ -31,10 +31,10 @@ STAR_CHOICES=[
 ]
 
 class Review(models.Model):
-    reviewer = models.ForeignKey(customer, on_delete = models.CASCADE)
+    name = models.CharField(max_length=250)
     hotel = models.ForeignKey(Hotel, on_delete = models.CASCADE)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     rating = models.CharField(choices = STAR_CHOICES, max_length=10)
     def __str__(self):
-        return f" {self.reviewer.user.first_name} {self.reviewer.user.last_name} "
+        return self.name
