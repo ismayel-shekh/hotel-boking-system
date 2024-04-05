@@ -74,7 +74,7 @@ class BookingViewset(viewsets.ModelViewSet):
                 print("booking")
                 x = models.Booking.objects.create(
                     hotel = hotel,
-                    customer = current_user,
+                    customer = current_customer,
                     rooms = rooms,
                 )
                 x.save()
