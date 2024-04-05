@@ -40,7 +40,7 @@ class UserRegistrationApiView(APIView):
             print("uid ", uid)
             confirm_link = f"https://hotel-boking-system.onrender.com/user/active/{uid}/{token}"
             
-            email_subject = "Confirm Your Email"
+            email_subject = "Active your Account"
             email_body = render_to_string('confirm_email.html', {'confirm_link' : confirm_link})
             
             email = EmailMultiAlternatives(email_subject , '', to=[user.email])

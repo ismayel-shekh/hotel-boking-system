@@ -45,7 +45,7 @@ class BookingViewset(viewsets.ModelViewSet):
         # serializer = self.get_serializer(data=request.data)
         # serializer.is_valid(raise_exception=True)
         customer_id = request.data.get('customer')
-        customerx = models.customer.objects.get(id=customer_id)
+        # customerx = models.customer.objects.get(id=customer_id)
         print(customer_id)
         hotel_id = request.data.get('hotel')
         rooms = request.data.get('rooms')
