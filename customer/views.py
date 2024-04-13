@@ -19,6 +19,14 @@ class customerViewset(viewsets.ModelViewSet):
     queryset = models.customer.objects.all()
     serializer_class = serializers.customerSrializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # print(self.request.query_parms)
+        user_id = self.request.query_params.get('user_id')
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
+    
 class USERViewset(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.USERSrializer
