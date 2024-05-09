@@ -111,3 +111,10 @@ class UserLogoutView(APIView):
 class customerImageviewset(viewsets.ModelViewSet):
     serializer_class = serializers.customerimageSerializer
     queryset = models.customer_image.objects.all()
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # print(self.request.query_parms)
+        user_id = self.request.query_params.get('user_id')
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
