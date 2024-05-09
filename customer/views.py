@@ -107,3 +107,7 @@ class UserLogoutView(APIView):
 #         if request.is_authenticated():
 #             request.user.auth_token.delete()
 #         return redirect('login')
+
+class customerImageviewset(viewsets.ModelViewSet):
+    serializer_class = serializers.customerimageSerializer
+    queryset = models.customer_image.objects.all()

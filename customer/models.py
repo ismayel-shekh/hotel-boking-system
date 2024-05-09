@@ -7,3 +7,7 @@ class customer(models.Model):
     def __str__(self):
         return f"{self.user.username}"
     
+
+class customer_image(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    image = models.ImageField(upload_to='customer/images/')

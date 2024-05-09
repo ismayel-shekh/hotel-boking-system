@@ -51,3 +51,8 @@ class RegistrationSrializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required = True)      
+
+class customerimageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.customer_image
+        fields = '__all__'
